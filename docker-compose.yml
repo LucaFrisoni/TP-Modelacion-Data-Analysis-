@@ -1,0 +1,20 @@
+# Entorno local: app con recarga automática al guardar cambios en el código.
+# Uso:  docker compose up --build      -> http://localhost:${PORT} (8501 por defecto, ver .env)
+name: tp-modelacion-analisis-datos
+
+services:
+  app:
+    container_name: tp-modelacion-analisis-datos
+    image: tp-modelacion-analisis-datos:dev
+    build:
+      context: .
+      target: dev
+    ports:
+      - "${PORT:-8501}:8501"
+    environment:
+      PORT: 8501
+      # Recargar al guardar; "poll" porque en Windows/macOS los cambios del volumen no se notifican.
+      STREAMLIT_SERVER_RUN_ON_SAVE: "true"
+      STREAMLIT_SERVER_FILE_WATCHER_TYPE: poll
+    volumes:
+      - .:/app

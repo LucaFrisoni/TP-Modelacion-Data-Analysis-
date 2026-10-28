@@ -1,0 +1,6 @@
+# Dependencias de ejecución de la app (las usan Docker y Streamlit Community Cloud).
+numpy>=2.1
+pandas>=2.2
+plotly>=6.1
+kaleido>=1.0
+streamlit>=1.45

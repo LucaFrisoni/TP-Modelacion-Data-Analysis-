@@ -1,0 +1,136 @@
+/* Estilos propios de la app (títulos, tarjetas y encabezado) que el tema de Streamlit no cubre.
+   Usan currentColor para verse bien tanto en el tema claro como en el oscuro. */
+
+h1 {
+  letter-spacing: -0.025em;
+}
+
+[data-testid="stMain"] h2,
+[data-testid="stMain"] h3 {
+  letter-spacing: -0.01em;
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1.5px dashed color-mix(in srgb, currentColor 24%, transparent);
+}
+
+[data-testid="stSidebar"] h2,
+[data-testid="stSidebar"] h3 {
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.65;
+  padding-top: 0.5rem;
+}
+
+[data-testid="stMetric"] {
+  padding: 0.9rem 1.1rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+  background: color-mix(in srgb, currentColor 3%, transparent);
+}
+
+.tp-etiqueta {
+  display: inline-block;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  border: 1px solid color-mix(in srgb, #68352b 40%, transparent);
+  background: color-mix(in srgb, #d49a8c 22%, transparent);
+}
+
+.tp-bajada {
+  font-size: 1.15rem;
+  line-height: 1.55;
+  opacity: 0.78;
+  max-width: 54rem;
+  margin: 0;
+}
+
+.tp-integrante {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px dashed color-mix(in srgb, currentColor 18%, transparent);
+}
+
+.tp-integrante:last-child {
+  border-bottom: none;
+}
+
+.tp-padron {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+}
+
+[data-testid="stPlotlyChart"] {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+
+/* Esqueleto de carga: mientras está en pantalla oculta el contenido real de la página.
+   Se oculta sin display: none para que los gráficos tomen el ancho correcto; al quitar el
+   esqueleto, el fundido de entrada vuelve a empezar. */
+[data-testid="stMainBlockContainer"]:has(.tp-esqueleto) [data-testid="stVerticalBlock"] > *:not(:has(.tp-esqueleto)) {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  animation: none;
+}
+
+[data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] > * {
+  animation: tp-fundido 0.35s ease-out both;
+}
+
+.tp-esqueleto {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-top: 0.5rem;
+  animation: tp-fundido 0.25s ease-out 0.15s both;  /* si la página carga rápido, ni se ve */
+}
+
+.tp-esqueleto-fila {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.tp-hueso {
+  border-radius: 14px;
+  background: linear-gradient(90deg,
+    color-mix(in srgb, currentColor 6%, transparent) 25%,
+    color-mix(in srgb, currentColor 12%, transparent) 50%,
+    color-mix(in srgb, currentColor 6%, transparent) 75%);
+  background-size: 200% 100%;
+  animation: tp-brillo 1.4s ease-in-out infinite;
+}
+
+.tp-hueso-titulo { height: 3rem; width: 62%; margin-bottom: 0.5rem; }
+.tp-hueso-linea { height: 1rem; width: 92%; border-radius: 999px; }
+.tp-hueso-corta { width: 58%; }
+.tp-hueso-tarjeta { height: 7.5rem; }
+.tp-hueso-grafico { height: 26rem; border-radius: 16px; }
+
+@keyframes tp-brillo {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@keyframes tp-fundido {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp-hueso,
+  .tp-esqueleto,
+  [data-testid="stMainBlockContainer"] [data-testid="stVerticalBlock"] > * {
+    animation: none;
+  }
+}

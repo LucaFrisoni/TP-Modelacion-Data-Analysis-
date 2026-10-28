@@ -1,0 +1,53 @@
+# Configuración de Streamlit para la app del TP: temas claro y oscuro, menú y servidor.
+
+[theme]
+# Tipografías: Inter para el texto y Satoshi para los títulos.
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap, sans-serif"
+headingFont = "Satoshi:https://api.fontshare.com/v2/css?f[]=satoshi@500,700,900&display=swap, Inter, sans-serif"
+headingFontWeights = [700, 700, 700, 600, 600, 600]
+baseRadius = "14px"
+buttonRadius = "full"
+showWidgetBorder = true
+showSidebarBorder = true
+
+# Color principal: #68352b (en el tema oscuro, un tono más claro del mismo color para que contraste).
+[theme.light]
+primaryColor = "#68352b"
+backgroundColor = "#f8f6f4"
+secondaryBackgroundColor = "#f1ece9"
+textColor = "#2a1712"
+linkColor = "#68352b"
+borderColor = "#e6dfdb"
+dataframeBorderColor = "#ebe5e1"
+dataframeHeaderBackgroundColor = "#f3efec"
+codeBackgroundColor = "#f1ece9"
+
+[theme.light.sidebar]
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f6f2f0"
+
+[theme.dark]
+primaryColor = "#d49a8c"
+backgroundColor = "#130f0e"
+secondaryBackgroundColor = "#1f1817"
+textColor = "#f1ece9"
+linkColor = "#d49a8c"
+borderColor = "#352a27"
+dataframeBorderColor = "#2c2321"
+dataframeHeaderBackgroundColor = "#1a1413"
+codeBackgroundColor = "#1f1817"
+
+[theme.dark.sidebar]
+backgroundColor = "#181312"
+secondaryBackgroundColor = "#221b19"
+
+[client]
+# "viewer" oculta el botón Deploy y las opciones de desarrollador, pero deja el menú de ajustes.
+toolbarMode = "viewer"
+
+[browser]
+gatherUsageStats = false
+
+[server]
+# Sin modo interactivo: evita que Streamlit pida un e-mail al arrancar (Docker / nube).
+headless = true

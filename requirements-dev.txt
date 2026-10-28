@@ -1,0 +1,3 @@
+# Dependencias solo de desarrollo: pruebas y capturas de pantalla.
+-r requirements.txt
+pytest>=8.0

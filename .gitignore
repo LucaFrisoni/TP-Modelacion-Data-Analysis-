@@ -1,0 +1,6 @@
+# Archivos que no se suben al repositorio.
+.venv/
+__pycache__/
+.pytest_cache/
+resultados/
+.env

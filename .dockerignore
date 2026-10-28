@@ -1,0 +1,7 @@
+# Archivos que no se copian a la imagen de Docker.
+.git/
+.venv/
+**/__pycache__/
+.pytest_cache/
+resultados/
+.env
