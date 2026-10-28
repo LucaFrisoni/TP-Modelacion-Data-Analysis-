@@ -62,7 +62,7 @@ Detalles a tener en cuenta:
 - Usa `requirements.txt`, `packages.txt` (instala Chromium para exportar PNG) y `.streamlit/config.toml`. El Dockerfile no se usa en esta plataforma. Si Chromium no estuviera disponible, el ZIP de figuras trae HTML interactivos en lugar de PNG.
 - Si la app no recibe visitas por un tiempo, se suspende. La primera visita la reactiva en unos segundos.
 
-**Alternativa con Docker: [Render](https://render.com) (plan gratuito).** Creá un _Web Service_ desde el repositorio con runtime _Docker_. Render construye la etapa `prod` y le asigna el puerto por `PORT`. Se suspende tras 15 minutos sin uso, y la primera carga después tarda entre 30 y 60 s.
+**Link al deploy: https://tpmodelacion-grupo6.streamlit.app/
 
 ## Datos del grupo y decisiones del equipo
 
