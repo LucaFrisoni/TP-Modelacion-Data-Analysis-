@@ -62,7 +62,7 @@ def test_modo_oscuro_se_aplica_sin_errores():
     assert app.session_state["modo_oscuro"]
 
 
-# La introducción muestra a los cuatro integrantes con su padrón.
+# La introducción muestra a todos los integrantes con su padrón.
 def test_introduccion_muestra_integrantes_y_padrones():
     from calculos.datos.grupo import INTEGRANTES
     html = " ".join(h.proto.body for h in abrir("introduccion").get("html"))

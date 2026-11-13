@@ -8,6 +8,7 @@ INTEGRANTES = (
     ("Rocío", "Menán Iglesias", 113591),
     ("Julieta Lara", "Arregui", 113517),
     ("Marcelo Tomás", "Cuneo Senmache", 113790),
+    ("Ramiro", "Besse Molina", 110657),
     ("Luca", "Frisoni", 113497),
 )
 

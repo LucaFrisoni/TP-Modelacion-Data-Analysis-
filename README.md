@@ -9,6 +9,7 @@
 | Rocío Menán Iglesias          | 113591 | Ingeniería en Petróleo |
 | Julieta Lara Arregui          | 113517 | Ingeniería en Petróleo |
 | Marcelo Tomás Cuneo Senmache  | 113790 | Ingeniería en Petróleo |
+| Ramiro Besse Molina           | 110657 | Ingeniería en Petróleo |
 | Luca Frisoni                  | 113497 | Ingeniería Informática |
 
 **Datos asignados al grupo:** NREF = 0.35 · tabla B de calor específico.
@@ -27,7 +28,7 @@
 
 ## 1. Propósito y alcance
 
-El grupo está formado por tres estudiantes de Ingeniería en Petróleo y uno de Ingeniería Informática, y el trabajo se dividió según esos perfiles:
+El grupo está formado por cuatro estudiantes de Ingeniería en Petróleo y uno de Ingeniería Informática, y el trabajo se dividió según esos perfiles:
 
 - **Análisis físico y matemático** (integrantes de Petróleo): interpretar el modelo térmico, decidir los criterios que deja abiertos la consigna, controlar los resultados y redactar el informe.
 - **Herramienta de cálculo** (integrante de Informática): una aplicación web que resuelve los seis ítems y le da al resto del grupo herramientas para analizar los resultados.
