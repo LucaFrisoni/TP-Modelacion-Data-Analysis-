@@ -28,14 +28,11 @@ class AjustePolinomico:
 
 
 def ajustar(x, y, grado: int) -> AjustePolinomico:
-    """Resuelve (A^T A) a = A^T y con A de Vandermonde.
-
-    Se trabaja en z = (x - centro) / semiancho ∈ [-1, 1] para que la matriz normal
-    esté bien condicionada (con x hasta 800 y grado 6 no lo estaría).
-    """
     x, y = np.asarray(x, float), np.asarray(y, float)
     if not 0 <= grado <= len(x) - 1:
-        raise ValueError(f"El grado debe estar entre 0 y {len(x) - 1} (polinomio interpolante)")
+        raise ValueError(
+            f"El grado debe estar entre 0 y {len(x) - 1} (polinomio interpolante)"
+        )
     dominio = [x.min(), x.max()]
     centro, semiancho = (dominio[0] + dominio[1]) / 2, (dominio[1] - dominio[0]) / 2
     A = np.vander((x - centro) / semiancho, grado + 1, increasing=True)
