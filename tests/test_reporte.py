@@ -32,9 +32,9 @@ def test_zip_de_tablas_contiene_cada_csv_completo():
 
 # La síntesis del Ítem 6 forma parte de las tablas descargables con el método pedido.
 def test_tablas_incluyen_resumen_del_item6():
-    dfs = reporte.tablas(reporte.Entradas(metodo="Secante (Broyden)"))
+    dfs = reporte.tablas(reporte.Entradas(metodo="Punto fijo"))
     resumen = dfs["item6_resumen"]
-    assert resumen[resumen["Ítem"].str.startswith("5")]["Origen"].str.contains("Broyden").all()
+    assert resumen[resumen["Ítem"].str.startswith("5")]["Origen"].str.contains("Punto fijo").all()
 
 
 # En modo oscuro cada serie conserva su identidad (mismo tono, otro paso) y el fondo es oscuro;

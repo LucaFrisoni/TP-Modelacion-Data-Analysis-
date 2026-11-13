@@ -5,7 +5,12 @@ import numpy as np
 from calculos.datos import enunciado as E
 from calculos.metodos.integradores import METODOS
 from calculos.modelo.modelo_termico import ModeloTermico
-from calculos.modelo.parametros import Operacion, masa_kg, superficie_m2, tiempo_en_horno_s
+from calculos.modelo.parametros import (
+    Operacion,
+    masa_kg,
+    superficie_m2,
+    tiempo_en_horno_s,
+)
 from calculos.modelo.unidades import c_a_k, k_a_c, s_a_min
 
 
@@ -30,10 +35,7 @@ class Resultado:
 
 
 def simular(modelo: ModeloTermico, metodo: str = "rk2", subpasos: int = 1) -> Resultado:
-    """Integra desde la entrada hasta la salida del horno (t = n° bolsillos * cad).
-
-    El paso es h = cad / subpasos; subpasos = 1 es el paso pedido por el enunciado.
-    """
+    """Integra desde la entrada hasta la salida del horno (t = n° bolsillos * cad)."""
     if metodo not in METODOS:
         raise ValueError(f"Método {metodo!r} desconocido. Opciones: {sorted(METODOS)}")
     if subpasos < 1:
@@ -64,11 +66,7 @@ def malla_analitica(operacion: Operacion, c: float, n_puntos: int = 400) -> Resu
 def error_relativo(
     numerico: Resultado, exacto: Resultado, escala: str = "K"
 ) -> np.ndarray:
-    """|T_num - T_exacta| / |T_exacta| punto a punto, en la escala elegida ("K" o "C").
-
-    TODO: VALIDAR FÓRMULA O CRITERIO — la escala la define el equipo
-    (ver ESCALA_ERROR_RELATIVO en calculos/datos/decisiones.py).
-    """
+    """|T_num - T_exacta| / |T_exacta| punto a punto, en la escala elegida ("K" o "C")."""
     if not np.allclose(numerico.t_s, exacto.t_s):
         raise ValueError("Las soluciones deben estar evaluadas en los mismos tiempos")
     if escala not in ("K", "C"):

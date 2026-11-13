@@ -8,7 +8,11 @@ from typing import Callable
 import numpy as np
 
 from calculos.datos import enunciado as E
-from calculos.metodos.minimos_cuadrados import AjustePolinomico, ajustar, ajustes_hasta_interpolante
+from calculos.metodos.minimos_cuadrados import (
+    AjustePolinomico,
+    ajustar,
+    ajustes_hasta_interpolante,
+)
 
 FuncionCalor = Callable[[float], float]
 
@@ -16,20 +20,17 @@ FuncionCalor = Callable[[float], float]
 def tabla(nombre: str) -> tuple[np.ndarray, np.ndarray]:
     """Devuelve (T [°C], C [J/kg K]) de la tabla indicada."""
     if nombre not in E.TABLAS_C:
-        raise ValueError(f"Tabla {nombre!r} inexistente. Opciones: {sorted(E.TABLAS_C)}")
+        raise ValueError(
+            f"Tabla {nombre!r} inexistente. Opciones: {sorted(E.TABLAS_C)}"
+        )
     return np.array(E.TEMPERATURAS_TABLA_C), np.array(E.TABLAS_C[nombre])
 
 
 def promedio_tabla(nombre: str) -> float:
-    """C promedio: media aritmética de los 7 valores tabulados.
-
-    TODO: VALIDAR FÓRMULA O CRITERIO — interpretación de "valor promedio de la tabla".
-    """
     return float(np.mean(tabla(nombre)[1]))
 
 
 def calor_constante(c: float) -> FuncionCalor:
-    """C(T) constante, para los Ítems 1 y 2b."""
     if c <= 0:
         raise ValueError("El calor específico debe ser positivo")
     return lambda T_C: c

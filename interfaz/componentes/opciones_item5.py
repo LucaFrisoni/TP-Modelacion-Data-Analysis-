@@ -20,14 +20,14 @@ def _a_widgets(op: OpcionesMetodo) -> dict:
     return {"i5_delta": op.delta_C, "i5_d1": op.desplazamiento_inicial_C[0],
             "i5_d2": op.desplazamiento_inicial_C[1], "i5_tol1": op.tolerancias[0],
             "i5_tol2": op.tolerancias[1], "i5_maxit": op.max_iteraciones, "i5_sub": op.subpasos,
-            "i5_amort": op.amortiguado, "i5_J11": j11, "i5_J12": j12, "i5_J21": j21, "i5_J22": j22}
+            "i5_J11": j11, "i5_J12": j12, "i5_J21": j21, "i5_J22": j22}
 
 
 def _desde_widgets() -> OpcionesMetodo:
     s = st.session_state
     return OpcionesMetodo(
         delta_C=s.i5_delta, desplazamiento_inicial_C=(s.i5_d1, s.i5_d2), tolerancias=(s.i5_tol1, s.i5_tol2),
-        max_iteraciones=int(s.i5_maxit), subpasos=int(s.i5_sub), amortiguado=s.i5_amort,
+        max_iteraciones=int(s.i5_maxit), subpasos=int(s.i5_sub),
         J_punto_fijo=((s.i5_J11, s.i5_J12), (s.i5_J21, s.i5_J22)))
 
 
@@ -69,11 +69,8 @@ def _controles_iteracion():
 
 
 def _controles_avanzados():
-    c1, c2 = st.columns(2)
-    c1.number_input("Subpasos por cadencia (h = cad / n)", min_value=1, max_value=20, step=1, key="i5_sub",
+    st.number_input("Subpasos por cadencia (h = cad / n)", min_value=1, max_value=20, step=1, key="i5_sub",
                     help="1 = paso del enunciado. Valores mayores suavizan los escalones de Sk.")
-    c2.checkbox("Amortiguar el paso", key="i5_amort",
-                help="Reduce el paso a la mitad mientras el residuo no mejore.")
     st.markdown("J constante para punto fijo (la identidad es la del enunciado):")
     for col, clave in zip(st.columns(4), ("i5_J11", "i5_J12", "i5_J21", "i5_J22")):
         col.number_input(clave.removeprefix("i5_"), key=clave)

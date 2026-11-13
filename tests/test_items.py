@@ -50,7 +50,7 @@ def test_newton_converge_y_cumple_objetivos_al_resimular(caso):
 
 # Las configuraciones del Ítem 5 se guardan en JSON y deben volver idénticas.
 def test_opciones_item5_sobreviven_ida_y_vuelta_por_json():
-    original = item5.OpcionesMetodo(delta_C=7.5, J_punto_fijo=((0.0, 1.0), (1.0, 0.0)), amortiguado=True)
+    original = item5.OpcionesMetodo(delta_C=7.5, J_punto_fijo=((0.0, 1.0), (1.0, 0.0)), subpasos=3)
     assert item5.OpcionesMetodo.desde_dict(json.loads(json.dumps(original.a_dict()))) == original
 
 

@@ -6,7 +6,11 @@ from calculos.datos import decisiones as D
 from calculos.datos import enunciado as E
 from calculos.datos import grupo
 from calculos.metodos.minimos_cuadrados import AjustePolinomico
-from calculos.modelo.calor_especifico import ajuste_tabla, calor_constante, promedio_tabla
+from calculos.modelo.calor_especifico import (
+    ajuste_tabla,
+    calor_constante,
+    promedio_tabla,
+)
 from calculos.modelo.modelo_termico import ModeloTermico
 from calculos.modelo.parametros import Operacion, operacion_base
 from calculos.modelo.soaking import CONVENCIONES_SK
@@ -14,7 +18,6 @@ from calculos.modelo.soaking import CONVENCIONES_SK
 
 @dataclass(frozen=True)
 class Configuracion:
-    """NREF y tabla son los del grupo; grado y convención de Sk son decisiones del equipo."""
 
     grado_c: int = D.GRADO_C
     convencion_sk: str = D.CONVENCION_SK
@@ -38,7 +41,9 @@ class Configuracion:
     def ajuste_c(self) -> AjustePolinomico:
         return ajuste_tabla(self.tabla_c, self.grado_c)
 
-    def modelo(self, operacion: Operacion, radiacion: bool, c_variable: bool) -> ModeloTermico:
+    def modelo(
+        self, operacion: Operacion, radiacion: bool, c_variable: bool
+    ) -> ModeloTermico:
         """Modelo con o sin radiación, con C promedio o con el ajuste C(T) elegido."""
         calor = self.ajuste_c() if c_variable else calor_constante(self.c_medio())
         return ModeloTermico(operacion, calor, radiacion)

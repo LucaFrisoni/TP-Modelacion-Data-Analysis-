@@ -29,8 +29,8 @@ def seccion_planteo(cfg, objetivos):
          r"J_{NR} = \left[\frac{\partial F_i}{\partial T_j}\right] \qquad "
          r"J_{SEC} = \left[\frac{F_i^{(k)} - F_i^{(k-1)}}{T_j^{(k)} - T_j^{(k-1)}}\right] \qquad "
          r"J_{PF} = I"))
-    st.caption("NR: J por diferencias finitas con paso Δ. Secante (Broyden): J inicial por diferencias finitas "
-               "y luego actualizaciones de rango 1. Secante (enunciado): J_SEC tal cual figura en la consigna.")
+    st.caption("NR: J por diferencias finitas con paso Δ. Secante (enunciado): J_SEC tal cual figura en la "
+               "consigna. Punto fijo: J constante, la identidad por defecto.")
 
 
 def fila_resultado(metodo, r) -> dict:

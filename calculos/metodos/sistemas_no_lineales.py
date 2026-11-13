@@ -3,7 +3,6 @@
 Esquema común: x_{k+1} = x_k - J^{-1} F(x_k). Cada método difiere en cómo arma J:
   - Newton-Raphson: jacobiano por diferencias finitas en cada iteración.
   - Secante (enunciado): J_SEC tal como figura en el enunciado.
-  - Secante (Broyden): actualización de rango 1 de un jacobiano inicial.
   - Punto fijo: J constante (identidad en el enunciado).
 """
 
@@ -27,14 +26,9 @@ class Criterio:
     tolerancias: tuple[float, float]  # |F1| y |F2| admisibles
     max_iteraciones: int = 50
     rango_fisico: tuple[float, float] = (0.0, 1200.0)
-    amortiguado: bool = False  # reducir el paso si no mejora el residuo
 
     def cumple(self, Fx: np.ndarray) -> bool:
         return bool(np.all(np.abs(Fx) <= np.asarray(self.tolerancias)))
-
-    def residuo(self, Fx: np.ndarray) -> float:
-        """Norma de F escalada por las tolerancias (F1 y F2 tienen unidades distintas)."""
-        return float(np.linalg.norm(np.asarray(Fx) / np.asarray(self.tolerancias)))
 
     def es_admisible(self, x: np.ndarray) -> bool:
         lo, hi = self.rango_fisico
@@ -95,11 +89,6 @@ def jacobiano_secante_enunciado(dx: np.ndarray, dF: np.ndarray) -> np.ndarray:
     return np.outer(dF, 1.0 / dx)
 
 
-def actualizar_broyden(J: np.ndarray, dx: np.ndarray, dF: np.ndarray) -> np.ndarray:
-    """Broyden: J_nuevo = J + ((ΔF - J Δx) Δxᵀ) / (Δxᵀ Δx). Cumple J_nuevo Δx = ΔF."""
-    return J + np.outer(dF - J @ dx, dx) / (dx @ dx)
-
-
 def iterar(
     F: Sistema, x0, fabrica_J: FabricaJ, criterio: Criterio
 ) -> ResultadoIterativo:
@@ -118,26 +107,8 @@ def iterar(
         except JacobianoSingular as error:
             res.x, res.mensaje = x, f"Se detuvo: {error}"
             return res
-        x = x - _factor_paso(F, x, dx, Fx, criterio) * dx
+        x = x - dx
     return res
-
-
-def _factor_paso(F: Sistema, x, dx, Fx, criterio: Criterio) -> float:
-    """Factor λ del paso x - λ dx. Sin amortiguar, λ = 1 (esquema del enunciado).
-
-    Amortiguado: se divide λ a la mitad (hasta 1/16) mientras el residuo escalado
-    no disminuya. Evita saltar a zonas donde Sk colapsa a 0 por el sobrecalentamiento.
-    TODO: VALIDAR FÓRMULA O CRITERIO — el equipo decide si se usa y cómo se reporta.
-    """
-    if not criterio.amortiguado:
-        return 1.0
-    lam, r0 = 1.0, criterio.residuo(Fx)
-    while lam > 1 / 16:
-        x_nuevo = x - lam * dx
-        if criterio.es_admisible(x_nuevo) and criterio.residuo(F(x_nuevo)) < r0:
-            return lam
-        lam /= 2
-    return lam
 
 
 class _ContadorEvaluaciones:
@@ -187,28 +158,6 @@ def secante_enunciado(
         def fabrica(x, Fx):
             J = jacobiano_secante_enunciado(x - previo["x"], Fx - previo["F"])
             previo["x"], previo["F"] = x.copy(), Fx.copy()
-            return J
-
-        return fabrica
-
-    return _ejecutar(F, x0, crear, criterio)
-
-
-def secante_broyden(
-    F: Sistema, x0, criterio: Criterio, delta: float
-) -> ResultadoIterativo:
-    """Secante multivariable (Broyden): J inicial por diferencias finitas y luego
-    actualizaciones de rango 1 que no requieren evaluaciones extra de F."""
-
-    def crear(Fc):
-        estado = {}
-
-        def fabrica(x, Fx):
-            if "J" in estado:
-                J = actualizar_broyden(estado["J"], x - estado["x"], Fx - estado["F"])
-            else:
-                J = jacobiano_diferencias(Fc, x, Fx, delta)
-            estado.update(J=J, x=x.copy(), F=Fx.copy())
             return J
 
         return fabrica

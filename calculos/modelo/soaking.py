@@ -33,13 +33,7 @@ def puntos_en_banda(T_C: np.ndarray, ancho_C: float) -> np.ndarray:
 def tiempo_acumulado_min(
     t_min: np.ndarray, en_banda: np.ndarray, convencion: str
 ) -> float:
-    """Convierte los puntos en banda en un tiempo acumulado.
-
-    TODO: VALIDAR FÓRMULA O CRITERIO — la convención la define el equipo
-    (CONVENCION_SK en calculos/datos/decisiones.py).
-      "intervalos": suma de los intervalos con ambos extremos en la banda.
-      "puntos":     cantidad de puntos en banda por el paso de tiempo.
-    """
+    """Convierte los puntos en banda en un tiempo acumulado."""
     if convencion == "intervalos":
         ambos = en_banda[:-1] & en_banda[1:]
         return float(np.sum(np.diff(t_min)[ambos]))
@@ -51,11 +45,7 @@ def tiempo_acumulado_min(
 
 
 def calcular_soaking(t_min, T_C, convencion: str) -> Soaking:
-    """Sk = tiempo acumulado en la banda; Tsk = promedio de T en los puntos de la banda.
-
-    TODO: VALIDAR FÓRMULA O CRITERIO — Tsk se toma como media aritmética de los
-    puntos en banda (con paso uniforme, equivale a un promedio temporal simple).
-    """
+    """Sk = tiempo acumulado en la banda; Tsk = promedio de T en los puntos de la banda."""
     t_min, T_C = np.asarray(t_min, float), np.asarray(T_C, float)
     if len(t_min) != len(T_C) or len(T_C) < 2:
         raise ValueError("Se necesitan al menos dos puntos con t y T del mismo largo")
