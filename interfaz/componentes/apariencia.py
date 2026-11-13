@@ -19,8 +19,18 @@ _ESQUELETO = """<div class="tp-esqueleto" aria-busy="true" aria-label="Cargando"
   <div class="tp-hueso tp-hueso-grafico"></div>
 </div>"""
 
-# En el tema oscuro el color principal es claro: el texto de los botones principales va oscuro.
-_CSS_OSCURO = '<style>[data-testid="stBaseButton-primary"] { color: #130f0e; }</style>'
+# En el tema oscuro el color principal es claro: el texto de los botones principales va oscuro
+# y los acentos marrones pasan a un tono más claro para que contrasten con el fondo.
+_CSS_OSCURO = """<style>
+[data-testid="stBaseButton-primary"] { color: #130f0e; }
+:root {
+  --tp-acento: #e3a08d;
+  --tp-tinte: color-mix(in srgb, #c8654a 16%, transparent);
+  --tp-tinte-fuerte: color-mix(in srgb, #c8654a 28%, transparent);
+  --tp-borde: color-mix(in srgb, #e3a08d 40%, transparent);
+  --tp-sombra: 0 4px 14px -6px rgba(0, 0, 0, 0.55), 0 1px 4px -1px rgba(0, 0, 0, 0.35);
+}
+</style>"""
 
 # Los temas claro y oscuro están en .streamlit/config.toml. Este script cambia el tema de Streamlit
 # (el mismo que ofrece el menú ⋮) para que coincida con el interruptor del panel lateral.

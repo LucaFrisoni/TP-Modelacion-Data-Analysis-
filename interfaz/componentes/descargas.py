@@ -33,8 +33,8 @@ def botones():
     e, iteraciones = entradas_sesion(), iteraciones_manuales()
     st.download_button("Todas las figuras (PNG)", lambda: reporte.zip_figuras(reporte.figuras(e)),
                        file_name="figuras_tp_revenido.zip", mime="application/zip",
-                       icon=":material/image:", on_click="ignore", width="stretch")
+                       icon=":material/image:", on_click="ignore", width="stretch", type="primary")
     st.download_button("Todas las tablas (CSV)", lambda: reporte.zip_tablas(reporte.tablas(e) | iteraciones),
                        file_name="tablas_tp_revenido.zip", mime="application/zip",
-                       icon=":material/table_view:", on_click="ignore", width="stretch")
+                       icon=":material/table_view:", on_click="ignore", width="stretch", type="primary")
     st.caption("Con las decisiones y calibraciones actuales.", help=_AYUDA)

@@ -1,5 +1,7 @@
 """Componentes compartidos: configuración vigente, gráficos, descargas y recuadros."""
 
+import re
+
 import pandas as pd
 import streamlit as st
 
@@ -22,12 +24,13 @@ def grafico(fig, clave: str | None = None):
 
 def descarga_csv(df: pd.DataFrame, nombre: str, etiqueta: str = "Descargar CSV", clave: str | None = None):
     st.download_button(etiqueta, df.to_csv(index=False).encode("utf-8-sig"), file_name=nombre,
-                       mime="text/csv", icon=":material/download:", key=clave)
+                       mime="text/csv", icon=":material/download:", key=clave, type="primary")
 
 
 def planteo(titulo: str, texto: str, ecuaciones: tuple[str, ...] = ()):
     """Recuadro con lo que cambia en el ítem respecto del planteo general."""
-    with st.container(border=True):
+    clave = "planteo_" + re.sub(r"\W+", "_", titulo.lower())  # la clave le da la sombra (estilos.css)
+    with st.container(border=True, key=clave):
         st.markdown(f"**{titulo}**")
         st.markdown(texto)
         for ecuacion in ecuaciones:

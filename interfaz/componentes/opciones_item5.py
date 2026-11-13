@@ -99,7 +99,7 @@ def _guardar_y_exportar():
         st.caption(aviso)
     datos = json.dumps(st.session_state[_CONFIGS], ensure_ascii=False, indent=2)
     st.download_button("Descargar configuraciones (JSON)", datos, "configuraciones_item5.json",
-                       mime="application/json", icon=":material/download:")
+                       mime="application/json", icon=":material/download:", type="primary")
     _importar(st.file_uploader("Importar configuraciones (JSON)", type="json", key="i5_archivo"))
 
 

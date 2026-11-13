@@ -28,8 +28,11 @@ def panel_lateral():
     apariencia.estilos()
     with st.sidebar:
         apariencia.interruptor_tema()
-        st.header("Datos del grupo")
-        st.markdown(f"**NREF** = {grupo.NREF}  \n**Tabla de calor específico:** {grupo.TABLA_C}")
-        st.session_state[CLAVE_CFG] = _decisiones()
-        st.header("Descargas")
-        descargas.botones()
+        with st.container(key="lateral_grupo"):
+            st.header("Datos del grupo")
+            st.markdown(f"**NREF** = {grupo.NREF}  \n**Tabla de calor específico:** {grupo.TABLA_C}")
+        with st.container(key="lateral_decisiones"):
+            st.session_state[CLAVE_CFG] = _decisiones()
+        with st.container(key="lateral_descargas"):
+            st.header("Descargas")
+            descargas.botones()

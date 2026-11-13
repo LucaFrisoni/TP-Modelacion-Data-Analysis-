@@ -1,5 +1,14 @@
 /* Estilos propios de la app (títulos, tarjetas y encabezado) que el tema de Streamlit no cubre.
-   Usan currentColor para verse bien tanto en el tema claro como en el oscuro. */
+   Usan currentColor y las variables --tp-* para verse bien en el tema claro y en el oscuro. */
+
+:root {
+  --tp-acento: #a0492f;
+  --tp-tinte: color-mix(in srgb, #c8654a 14%, transparent);
+  --tp-tinte-fuerte: color-mix(in srgb, #c8654a 24%, transparent);
+  --tp-borde: color-mix(in srgb, #a0492f 38%, transparent);
+  --tp-sombra: 0 4px 14px -6px color-mix(in srgb, #4a1e14 22%, transparent),
+               0 1px 4px -1px color-mix(in srgb, #4a1e14 12%, transparent);
+}
 
 h1 {
   letter-spacing: -0.025em;
@@ -27,8 +36,70 @@ h1 {
 [data-testid="stMetric"] {
   padding: 0.9rem 1.1rem;
   border-radius: 16px;
-  border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
-  background: color-mix(in srgb, currentColor 3%, transparent);
+  min-height: 7.75rem;  /* misma altura con y sin la variación (delta) */
+  border: 1px solid var(--tp-borde);
+  background: var(--tp-tinte);
+}
+
+[data-testid="stMetricLabel"] {
+  color: var(--tp-acento);
+  font-weight: 600;
+}
+
+[data-testid="stMetricValue"] {
+  font-weight: 600;
+}
+
+/* Recuadro de planteo de cada ítem: sombra y franja de color a la izquierda. */
+[class*="st-key-planteo"] {
+  border-left: 5px solid var(--tp-acento) !important;
+  background: color-mix(in srgb, #c8654a 5%, transparent);
+}
+
+/* Sombra leve en los recuadros con borde y en los gráficos. */
+[data-testid="stMain"] [data-testid="stLayoutWrapper"] > [data-testid="stVerticalBlock"],
+[data-testid="stPlotlyChart"] {
+  box-shadow: var(--tp-sombra);
+}
+
+/* Selects: fondo y borde en tono marrón. */
+[data-testid="stSelectbox"] [data-baseweb="select"] > div,
+[data-testid="stMultiSelect"] [data-baseweb="select"] > div {
+  background: var(--tp-tinte-fuerte);
+  border-color: var(--tp-borde);
+  font-weight: 500;
+}
+
+/* Panel lateral: secciones separadas por una línea, con el título en color y una marca. */
+[class*="st-key-lateral"] {
+  padding-bottom: 1.1rem;
+  border-bottom: 1px solid var(--tp-borde);
+}
+
+[class*="st-key-lateral_descargas"] {
+  border-bottom: none;
+}
+
+[data-testid="stSidebar"] [class*="st-key-lateral"] h2 {
+  color: var(--tp-acento);
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+[data-testid="stSidebar"] [class*="st-key-lateral"] h2::before {
+  content: "";
+  width: 4px;
+  height: 1em;
+  border-radius: 2px;
+  background: var(--tp-acento);
+}
+
+.tp-integrantes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(21rem, 1fr));
+  column-gap: 2.5rem;
 }
 
 .tp-etiqueta {
@@ -58,12 +129,10 @@ h1 {
   border-bottom: 1px dashed color-mix(in srgb, currentColor 18%, transparent);
 }
 
-.tp-integrante:last-child {
-  border-bottom: none;
-}
 
 .tp-padron {
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   opacity: 0.7;
 }
 
