@@ -13,9 +13,11 @@ def seccion_planteo(cfg):
     op = cfg.operacion_base()
     planteo(
         "Planteo del Ítem 1",
-        f"Se desprecia la radiación y se usa C constante = promedio de la tabla {cfg.tabla_c} "
-        f"(**{cfg.c_medio():.4g} J/kg K**). Con T1 = T2 = T∞ = **{op.T1_C:g} °C** y paso h = cad = "
-        f"**{op.cad_s:g} s**, la ecuación es lineal y tiene solución exacta:",
+        f"- Se **desprecia la radiación** (solo convección).\n"
+        f"- C constante = promedio de la tabla {cfg.tabla_c}: **{cfg.c_medio():.4g} J/kg K**.\n"
+        f"- Horno a una sola temperatura: T1 = T2 = T∞ = **{op.T1_C:g} °C**.\n"
+        f"- Paso de integración h = cad = **{op.cad_s:g} s**.\n\n"
+        "Así la ecuación es lineal y tiene solución exacta:",
         (r"-m\,\bar C\,\frac{dT}{dt} = h_c S\,(T - T_\infty)"
          r"\quad\Longrightarrow\quad T(t) = T_\infty + (T_0 - T_\infty)\,e^{-\frac{h_c S}{m \bar C}t}",))
 

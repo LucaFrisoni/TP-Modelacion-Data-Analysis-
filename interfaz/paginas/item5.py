@@ -19,10 +19,12 @@ def resolver(cfg, tsk_obj, metodo, opciones):
 def seccion_planteo(cfg, objetivos):
     planteo(
         "Planteo del Ítem 5",
-        "Se automatiza el Ítem 3: T1 y T2 son las incógnitas de un sistema no lineal cuyas funciones son el "
-        f"modelo completo (radiación + C(T)), con la cadencia original ({cfg.operacion_base().cad_s:g} s). "
-        "Cada evaluación de F es una simulación completa. Tsk objetivo: "
-        + ", ".join(f"caso {c} = **{t:.4g} °C**" for c, t in objetivos.items()) + "; Sk objetivo = 10 min.",
+        "- Se automatiza el Ítem 3: **T1 y T2 son las incógnitas** de un sistema no lineal.\n"
+        "- Las funciones del sistema usan el modelo completo (radiación + C(T)) con la cadencia original "
+        f"({cfg.operacion_base().cad_s:g} s).\n"
+        "- Cada evaluación de F es una simulación completa.\n"
+        "- Tsk objetivo: " + ", ".join(f"caso {c} = **{t:.4g} °C**" for c, t in objetivos.items())
+        + "; Sk objetivo = 10 min.",
         (r"F_1(T_1,T_2) = T_{sk}(T_1,T_2) - T_{sk,obj} = 0 \qquad F_2(T_1,T_2) = S_k(T_1,T_2) - S_{k,obj} = 0",
          r"\begin{bmatrix}T_1\\T_2\end{bmatrix}^{(k+1)} = \begin{bmatrix}T_1\\T_2\end{bmatrix}^{(k)}"
          r" - J^{-1}\begin{bmatrix}F_1\\F_2\end{bmatrix}^{(k)}",

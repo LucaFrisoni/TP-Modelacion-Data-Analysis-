@@ -42,16 +42,46 @@ def titulo_problema():
 def seccion_problema():
     titulo_problema()
     st.markdown(
-        "El **revenido** es la última etapa del tratamiento de *temple y revenido* de tubos de acero para "
-        "la industria petrolera: el tubo templado se recalienta hasta una **temperatura objetivo "
-        "(500–700 °C)** y sus propiedades finales dependen de esa temperatura y del **tiempo que permanece "
-        "en ella**.\n\n"
-        "El horno funciona así:\n"
-        f"- Es un **horno continuo de {E.L_HORNO:g} m** con **{E.N_BOLSILLOS} bolsillos** "
-        "(mecanismo *walking-beam*), por el que los tubos avanzan a velocidad constante.\n"
-        "- La primera mitad del horno está a **T1** y la segunda a **T2**.\n\n"
-        "**Objetivo:** predecir la temperatura del tubo y encontrar condiciones de operación que "
-        "cumplan los objetivos metalúrgicos.")
+        "El TP modela la etapa de **revenido** del tratamiento térmico de *temple y revenido* de tubos de "
+        "acero. Después del temple el acero queda muy duro pero frágil, así que se lo **recalienta de forma "
+        "controlada a temperaturas de entre 500 y 700 °C** para ajustar su resistencia y tenacidad.\n\n"
+        f"Los tubos avanzan por un **horno continuo de {E.L_HORNO:g} m** ({E.N_BOLSILLOS} bolsillos, "
+        "mecanismo *walking-beam*) dividido en dos zonas: la **primera mitad está a T1** y la **segunda a T2**.\n\n"
+        "Para modelar la temperatura de los tubos se asume una **temperatura uniforme en todo el tubo**, por lo "
+        "que alcanza con **una sola ecuación diferencial ordinaria en el tiempo**. Esa ecuación surge de un "
+        "**balance de energía**: la variación de la energía del tubo es igual al calor que recibe por "
+        "**convección** y **radiación**.\n\n"
+        "**Objetivo:** predecir la evolución de la temperatura del tubo y encontrar las temperaturas de zona "
+        "T1 y T2 que cumplan los objetivos metalúrgicos.")
+    st.info("Todos los ítems del TP se centran en esta única ecuación diferencial.", icon=":material/function:")
+
+
+_ECUACION = (r"\underbrace{-m\,C\,\frac{dT}{dt}}_{\text{cuánto se calienta el tubo}} = "
+             r"\underbrace{h_c S\,(T - T_\infty)}_{\text{convección}} + "
+             r"\underbrace{\sigma \varepsilon S\,(T^4 - T_\infty^4)}_{\text{radiación}}")
+
+_SIMBOLOS = (
+    ("Lado izquierdo: lo que se calienta el tubo", [
+        "$m$: masa del tubo [kg]", "$C$: calor específico del acero [J/kg K]",
+        "$T$: temperatura del tubo [K]", "$t$: tiempo desde que el tubo entra al horno [s]",
+        r"$\frac{dT}{dt}$: qué tan rápido cambia la temperatura del tubo"]),
+    ("Lado derecho: calor que intercambia con el horno", [
+        "$h_c$: coeficiente de convección [W/m² K]", "$S$: superficie exterior del tubo [m²]",
+        r"$T_\infty$: temperatura del horno donde está el tubo (T1 o T2)",
+        r"$\sigma$: constante de Stefan-Boltzmann [W/m² K⁴]", r"$\varepsilon$: emisividad del acero"]),
+    ("Geometría y avance", [
+        r"$\rho$: densidad del acero [kg/m³]", "$OD$: diámetro exterior del tubo [m]",
+        "$WT$: espesor de pared [m]", "$L_t$: largo del tubo [m] · $L$: largo del horno [m]",
+        "$x$: posición del tubo en el horno [m]", "$v_0$: velocidad de avance [m/s]",
+        r"$n_{bol}$: cantidad de bolsillos · $cad$: cadencia [s]"]),
+)
+
+
+def referencias_simbolos():
+    """Qué representa cada símbolo de la ecuación, agrupado por parte."""
+    for col, (titulo, items) in zip(st.columns(len(_SIMBOLOS)), _SIMBOLOS):
+        with col.container(border=True, height="stretch"):
+            st.markdown(f"**{titulo}**\n" + "".join(f"\n- {item}" for item in items))
 
 
 def seccion_modelo(tiempo_min: float):
@@ -59,10 +89,11 @@ def seccion_modelo(tiempo_min: float):
     st.markdown("Modelo de **temperatura uniforme** (todo el tubo a la misma T): balance de energía con "
                 "convección y radiación desde el horno.")
     with st.container(border=True):
-        st.latex(r"-m\,C\,\frac{dT}{dt} = h_c S\,(T - T_\infty) + \sigma \varepsilon S\,(T^4 - T_\infty^4)")
+        st.latex(_ECUACION)
         st.latex(r"S = \pi\,OD\,L_t \qquad m = \rho\,\pi\,OD\,WT\left(1 - \frac{WT}{OD}\right)L_t")
         st.latex(r"T_\infty(x) = \begin{cases} T_1 & x \le L/2 \\ T_2 & x > L/2 \end{cases}"
                  r"\qquad x = v_0\,t \qquad v_0 = \frac{L}{n_{bol}\cdot cad}")
+    referencias_simbolos()
     st.markdown(
         f"La simulación termina cuando el tubo sale del horno: $t_f = L / v_0 = n_{{bol}}\\cdot cad$ "
         f"= **{tiempo_min:.4g} min**. Este tiempo no figura explícito en el enunciado: se deduce del recorrido.\n\n"

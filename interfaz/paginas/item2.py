@@ -51,9 +51,11 @@ def tab_2b(cfg):
 
 def tab_2c(cfg):
     planteo("Qué se calcula en el 2c",
-            f"Sobre los puntos del 2b: **Sk** = tiempo acumulado con T dentro de la banda "
-            f"[T final − {E.ANCHO_BANDA_SOAKING_C:g} °C, T final]; **Tsk** = temperatura promedio en esa banda. "
-            f"Conteo de Sk: *{cfg.convencion_sk}* (panel lateral).")
+            f"Sobre los puntos del 2b:\n"
+            f"- **Sk** = tiempo acumulado con T dentro de la banda "
+            f"[T final − {E.ANCHO_BANDA_SOAKING_C:g} °C, T final].\n"
+            f"- **Tsk** = temperatura promedio en esa banda.\n"
+            f"- Conteo de Sk: *{cfg.convencion_sk}* (panel lateral).")
     res, sk = item2.item2c(cfg)
     grafico(G.soaking(res, sk, cfg.operacion_base(), "Ítem 2c – banda de soaking"))
     c1, c2, c3 = st.columns(3)

@@ -14,10 +14,11 @@ def seccion_planteo(cfg, cad_nueva: float):
     cad = cfg.operacion_base().cad_s
     planteo(
         "Planteo del Ítem 4",
-        f"Productividad = tubos por unidad de tiempo ∝ 1/cad. Para +{E.INCREMENTO_PRODUCTIVIDAD:.0%}: "
-        f"cad = **{cad:g} s → {cad_nueva:.4g} s**, y el tiempo en el horno pasa de "
-        f"{tiempo_en_horno_s(cad) / 60:.4g} a **{tiempo_en_horno_s(cad_nueva) / 60:.4g} min**. "
-        "Hay que encontrar nuevas T1 y T2 que mantengan Sk y Tsk dentro de las tolerancias del Ítem 3.",
+        "- Productividad = tubos por unidad de tiempo ∝ 1/cad.\n"
+        f"- Para +{E.INCREMENTO_PRODUCTIVIDAD:.0%}: cad = **{cad:g} s → {cad_nueva:.4g} s**.\n"
+        f"- El tiempo en el horno pasa de {tiempo_en_horno_s(cad) / 60:.4g} a "
+        f"**{tiempo_en_horno_s(cad_nueva) / 60:.4g} min**.\n"
+        "- Objetivo: nuevas T1 y T2 que mantengan Sk y Tsk dentro de las tolerancias del Ítem 3.",
         (r"cad_{nueva} = \frac{cad}{1 + 0{,}15}",))
 
 
